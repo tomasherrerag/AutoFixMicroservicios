@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/citasMS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/citasMS/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configServer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/marcasMS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/marcasMS/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reparacionesMS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reparacionesMS/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/vehiculosMS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/vehiculosMS/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
