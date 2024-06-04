@@ -1,1 +1,1 @@
-Dependecias sobrantes o erroneas en eurekaServer
+Dependecias sobrantes o erroneas, revisar si al iniciar con solo las dependencias mencionadas en ayudantias funciona

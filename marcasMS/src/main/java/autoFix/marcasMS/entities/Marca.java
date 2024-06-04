@@ -1,16 +1,16 @@
 package autoFix.marcasMS.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.scheduling.support.SimpleTriggerContext;
 
 @Entity
 @Table(name = "marca")
+@Data
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Marca {
 
@@ -22,7 +22,7 @@ public class Marca {
     @Column(unique = true,name = "nombre")
     private String nombre;
     @Column(name = "numBono")
-    private int numBono;
+    private int numBonos;
     @Column(name = "montoBono")
     private int montoBono;
 }
