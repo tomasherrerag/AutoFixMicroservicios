@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
 
-    public Vehiculo findVehiculoByPatente(String patente);
+    Vehiculo findVehiculoByPatente(String patente);
 
-    public void deleteVehiculoById(int id);
+    void deleteVehiculoById(Long id);
 }

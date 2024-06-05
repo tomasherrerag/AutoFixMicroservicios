@@ -2,7 +2,6 @@ package autoFix.marcasMS.services;
 
 import autoFix.marcasMS.entities.Marca;
 import autoFix.marcasMS.repositories.MarcaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +27,11 @@ public class MarcaService {
     }
 
     public int getMontoById(int idMarca){
-        return marcaRepository.findById(idMarca).get().getMontoBono();
+        Optional<Marca> optionalMarca = marcaRepository.findById(idMarca);
+        if (optionalMarca.isEmpty()){
+            throw new RuntimeException("no se encontró la marca especificada, errfunct: getMontoById");
+        }
+        return optionalMarca.get().getMontoBono();
     }
 
     public Marca getMarcaById(int id){

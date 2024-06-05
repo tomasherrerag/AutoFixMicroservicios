@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Integer> {
 
-    public List<Marca> findAllByOrderByNombreAsc();
+    List<Marca> findAllByOrderByNombreAsc();
 
-    public Marca findByNombre(String nombre);
+    Marca findByNombre(String nombre);
 
-    public void deleteMarcaById(int id);
+    void deleteMarcaById(int id);
 }

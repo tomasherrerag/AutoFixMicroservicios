@@ -42,7 +42,7 @@ public class VehiculoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteVehiculo(@PathVariable int id){
+    public ResponseEntity<String> deleteVehiculo(@PathVariable Long id){
         vehiculoService.borrarVehiculo(id);
         return new ResponseEntity<>("Vehiculo eliminado", HttpStatus.OK);
     }

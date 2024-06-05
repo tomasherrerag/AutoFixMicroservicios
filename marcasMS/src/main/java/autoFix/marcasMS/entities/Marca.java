@@ -2,8 +2,6 @@ package autoFix.marcasMS.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 
 @Entity
 @Table(name = "marca")

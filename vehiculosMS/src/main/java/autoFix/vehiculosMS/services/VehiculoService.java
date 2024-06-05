@@ -53,7 +53,7 @@ public class VehiculoService {
         return vehiculoRepository.save(vehiculoExistente);
     }
 
-    public void borrarVehiculo(int id){
+    public void borrarVehiculo(Long id){
         vehiculoRepository.deleteVehiculoById(id);
     }
 }
