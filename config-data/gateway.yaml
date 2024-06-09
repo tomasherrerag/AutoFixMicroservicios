@@ -19,3 +19,19 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
+        - id: marcasMS
+          uri: lb://ms-orders:8091
+          predicates:
+            - Path=/autofix/marcas/**
+        - id: reparacionesMS
+          uri: lb://ms-products:8092
+          predicates:
+            - Path=//autofix/reparaciones/**
+        - id: vehiculosMS
+          uri: lb://ms-products:8093
+          predicates:
+            - Path=//autofix/vehiculos/**
+        - id: citasMS
+          uri: lb://ms-products:8094
+          predicates:
+            - Path=//autofix/citas/**

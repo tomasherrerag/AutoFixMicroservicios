@@ -21,6 +21,16 @@ public class Cita {
 
     @Column(name = "fechaIn")
     private LocalDateTime fechaIn;
+
+    @Column(name = "montoBase")
+    private int montoBase;
+    @Column(name = "montoRecargos")
+    private double montoRecargos;
+    @Column(name = "montoDescuentos")
+    private double montoDescuentos;
+    @Column(name = "montoIVA")
+    private double montoIVA;
+
     @Column(name = "montoFinal")
     private int montoFinal;
     @Column(name = "fechaReady")

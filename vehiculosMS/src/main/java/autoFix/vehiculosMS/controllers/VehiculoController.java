@@ -46,4 +46,10 @@ public class VehiculoController {
         vehiculoService.borrarVehiculo(id);
         return new ResponseEntity<>("Vehiculo eliminado", HttpStatus.OK);
     }
+
+    @GetMapping
+    public ResponseEntity<Long> getIdVehiculoByPatente(@RequestBody String patente){
+        Long idVehiculo = this.vehiculoService.getIdVehiculoByPatente(patente);
+        return ResponseEntity.ok(idVehiculo);
+    }
 }

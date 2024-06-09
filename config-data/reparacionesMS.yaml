@@ -1,0 +1,15 @@
+server:
+  port: 8092
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reparaciones
+    username: postgres
+    password: 1234
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka

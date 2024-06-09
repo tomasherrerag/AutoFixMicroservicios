@@ -22,6 +22,10 @@ public class VehiculoService {
         return vehiculoRepository.findVehiculoByPatente(patente);//revisar que pasa si el vehículo no está (probar uso de optional)
     }
 
+    public Long getIdVehiculoByPatente(String patente){
+        return vehiculoRepository.findVehiculoByPatente(patente).getId();
+    }
+
     public int getIdMarcaByIdVehiculo(Long idVehiculo){
         return vehiculoRepository.getById(idVehiculo).getIdMarca();
     }
