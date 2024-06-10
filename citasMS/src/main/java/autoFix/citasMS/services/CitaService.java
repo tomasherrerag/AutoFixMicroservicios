@@ -47,4 +47,10 @@ public class CitaService {
         Long vehiculoid = vehiculosFeignClient.getIdVehiculoByPatente(patente);
         return citaRepository.getCitasByIdVehiculoOrderByFechaInAsc(vehiculoid);
     }
+
+    /*public Cita nuevaCita(String patenteVehiculo, List<String> listaReparaciones, int kilometraje, int bono){
+        Cita nuevaCita = new Cita();
+        nuevaCita.setIdVehiculo(vehiculosFeignClient.getIdVehiculoByPatente(patenteVehiculo));
+        nuevaCita.setNombresReparaciones(String.join(",", listaReparaciones));
+    }*/
 }
