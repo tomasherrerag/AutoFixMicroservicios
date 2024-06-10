@@ -28,12 +28,12 @@ spring:
         - id: reparacionesMS
           uri: lb://reparacionesMS:8092
           predicates:
-            - Path=//autofix/reparaciones/**
+            - Path=/autofix/reparaciones/**
         - id: vehiculosMS
           uri: lb://vehiculosMS:8093
           predicates:
-            - Path=//autofix/vehiculos/**
+            - Path=/autofix/vehiculos/**
         - id: citasMS
           uri: lb://citasMS:8094
           predicates:
-            - Path=//autofix/citas/**
+            - Path=/autofix/citas/**
