@@ -47,9 +47,15 @@ public class VehiculoController {
         return new ResponseEntity<>("Vehiculo eliminado", HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Long> getIdVehiculoByPatente(@RequestBody String patente){
+    @GetMapping("/getIdVehiculoByPatente")
+    public ResponseEntity<Long> getIdVehiculoByPatente(@RequestParam String patente){
         Long idVehiculo = this.vehiculoService.getIdVehiculoByPatente(patente);
         return ResponseEntity.ok(idVehiculo);
+    }
+
+    @GetMapping("/getIdMarcaByIdVehiculo")
+    public ResponseEntity<Integer> getIdMarcaByIdVehiculo(@RequestParam Long idVehiculo){
+        int idMarca = this.vehiculoService.getIdMarcaByIdVehiculo(idVehiculo);
+        return ResponseEntity.ok(idMarca);
     }
 }

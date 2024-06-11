@@ -47,4 +47,21 @@ public class MarcaController {
         marcaService.borrarMarca(id);
         return new ResponseEntity<>("marca eliminada", HttpStatus.OK);
     }
+
+    @GetMapping("/getNumBonosByIdMarca")
+    public ResponseEntity<Integer> getNumBonosByIdMarca(@RequestParam int idMarca){
+        int numBonos = marcaService.getNumBonosByIdMarca(idMarca);
+        return ResponseEntity.ok(numBonos);
+    }
+
+    @GetMapping("/getMontoBonoByIdMarca")
+    public ResponseEntity<Integer> getMontoBonoByIdMarca(@RequestParam int idMarca){
+        int montoBono = marcaService.getMontoById(idMarca);
+        return ResponseEntity.ok(montoBono);
+    }
+
+    @PutMapping("/descontarUnBonoByIdMarca")
+    public void descontarUnBonoByIdMarca(@RequestParam int idMarca){
+        marcaService.descontarUnBonoById(idMarca);
+    }
 }
