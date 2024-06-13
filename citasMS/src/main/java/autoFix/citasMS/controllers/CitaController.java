@@ -1,7 +1,9 @@
 package autoFix.citasMS.controllers;
 
 import autoFix.citasMS.DTOs.NuevaCitaDTO;
+import autoFix.citasMS.DTOs.NuevaCitaUnitariaDTO;
 import autoFix.citasMS.entities.Cita;
+import autoFix.citasMS.entities.CitaUnitaria;
 import autoFix.citasMS.services.CitaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ public class CitaController {
         this.citaService = citaService;
     }
 
+    //Bloque Citas
+
     @GetMapping("/")
     public ResponseEntity<List<Cita>> listarCitas(){
         List<Cita> listadoCitas = citaService.getCitas();
@@ -33,5 +37,39 @@ public class CitaController {
     @PutMapping("/ready/{id}")
     public Cita citaReady(@PathVariable Long id){
         return citaService.reparacionesListas(id);
+    }
+
+    //Bloque CitasUnitarias
+
+    @GetMapping("Unitarias/")
+    public ResponseEntity<List<CitaUnitaria>> listarCitasUnitarias(){
+        List<CitaUnitaria> listadoUnitarias = citaService.getCitasUnitarias();
+        return ResponseEntity.ok(listadoUnitarias);
+    }
+
+    @GetMapping("Unitarias/{id}")
+    public ResponseEntity<CitaUnitaria> getCitaUnitaria(@PathVariable Long id){
+        CitaUnitaria citaUnitaria = citaService.getCitaUnitariaById(id);
+        return ResponseEntity.ok(citaUnitaria);
+    }
+
+    @GetMapping("Unitarias/ByPadre{idPadre}")
+    public ResponseEntity<List<CitaUnitaria>> listarCitasUnitariasByPadre(@PathVariable Long idPadre){
+        List<CitaUnitaria> listadoUnitarias = citaService.getCitasUnitariasByIdCitaPadre(idPadre);
+        return ResponseEntity.ok(listadoUnitarias);
+    }
+
+    @GetMapping("Unitarias/ByPatente{patente}")
+    public ResponseEntity<List<CitaUnitaria>> listarCitasUnitariasByPatente(@PathVariable String patente){
+        List<CitaUnitaria> listadoUnitarias = citaService.getCitasUnitariasByPatente(patente);
+        return ResponseEntity.ok(listadoUnitarias);
+    }
+
+    //bloque PostMapping
+
+    @PostMapping("/Unitarias/")
+    public ResponseEntity<CitaUnitaria> crearCitaUnitaria(@RequestBody NuevaCitaUnitariaDTO nuevaCitaUnitariaDTO){
+        CitaUnitaria citaUnitaria = citaService.nuevaCitaUnitaria(nuevaCitaUnitariaDTO);
+        return ResponseEntity.ok(citaUnitaria);
     }
 }

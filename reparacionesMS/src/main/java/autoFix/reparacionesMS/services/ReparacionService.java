@@ -24,6 +24,26 @@ public class ReparacionService {
         return reparacionRepository.findByNombre(nombre);
     }
 
+    public Integer getMontoReparacionByNombreAndCombustible(String nombre, String combustible){
+        Reparacion reparacion = reparacionRepository.findByNombre(nombre);
+        if (combustible.equals("Gas"))
+        {
+            return reparacion.getPrecioGas();
+        }
+        if (combustible.equals("Diesel")){
+            return reparacion.getPrecioDiesel();
+        }
+        if (combustible.equals("Hibrid")){
+            return reparacion.getPrecioHibrid();
+        }
+        if (combustible.equals("Electric")){
+            return reparacion.getPrecioElectric();
+        }
+        else {
+            throw new RuntimeException("el parámetro de combustible está mal escrito, errfunct: getMontoReparacionByNombreAndCombustible");
+        }
+    }
+
     public Reparacion getReparacionById(int id){
         Optional<Reparacion> optionalReparacion = reparacionRepository.findById(id);
         if (optionalReparacion.isEmpty()){

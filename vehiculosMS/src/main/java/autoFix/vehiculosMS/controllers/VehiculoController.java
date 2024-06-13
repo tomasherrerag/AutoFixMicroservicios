@@ -58,4 +58,10 @@ public class VehiculoController {
         int idMarca = this.vehiculoService.getIdMarcaByIdVehiculo(idVehiculo);
         return ResponseEntity.ok(idMarca);
     }
+
+    @GetMapping("/getCombustibleByPatente")
+    public ResponseEntity<String> getTipoCombustibleByPatente(@RequestParam String patente){
+        String combustible = vehiculoService.getTipoCombustibleByPatente(patente);
+        return ResponseEntity.ok(combustible);
+    }
 }

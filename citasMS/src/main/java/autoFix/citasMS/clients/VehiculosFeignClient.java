@@ -1,6 +1,7 @@
 package autoFix.citasMS.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,4 +14,7 @@ public interface VehiculosFeignClient {
 
     @GetMapping("/getIdMarcaByIdVehiculo")
     Integer getIdMarcaByIdVehiculo(@RequestParam Long idVehiculo);
+
+    @GetMapping("/getCombustibleByPatente")
+    String getTipoCombustibleByPatente(@RequestParam String patente);
 }

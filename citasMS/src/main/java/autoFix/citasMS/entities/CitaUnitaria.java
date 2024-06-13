@@ -27,4 +27,7 @@ public class CitaUnitaria {
     private LocalDateTime fechaReparacion;
     @Column(name = "montoReparacion")
     private int MontoReparacion;
+
+    @Column(name = "citaPadre")
+    private Long idCitaPadre;
 }

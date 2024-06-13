@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/autofix/reparaciones")
@@ -46,5 +47,12 @@ public class ReparacionController {
     public ResponseEntity<String> deleteMarca(@PathVariable int id){
         reparacionService.borrarReparacion(id);
         return new ResponseEntity<>("Reparacion eliminada", HttpStatus.OK);
+    }
+
+    @GetMapping("/MontoByNombre")
+    public ResponseEntity<Integer> getMontoReparacionByNombreAndCombustible(@RequestParam String nombre,
+                                                                            @RequestParam String combustible){
+        Integer montoReparacion = reparacionService.getMontoReparacionByNombreAndCombustible(nombre, combustible);
+        return ResponseEntity.ok(montoReparacion);
     }
 }

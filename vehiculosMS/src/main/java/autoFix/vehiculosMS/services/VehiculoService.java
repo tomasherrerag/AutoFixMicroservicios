@@ -38,6 +38,9 @@ public class VehiculoService {
         return optionalVehiculo.get();
     }
 
+    public String getTipoCombustibleByPatente(String patente){
+        return getVehiculoByPatente(patente).getMotor();
+    }
 
     public Vehiculo saveVehiculo(Vehiculo nuevoVehiculo) {return vehiculoRepository.save(nuevoVehiculo);}
 
