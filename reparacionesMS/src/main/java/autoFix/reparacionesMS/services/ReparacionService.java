@@ -26,7 +26,7 @@ public class ReparacionService {
 
     public Integer getMontoReparacionByNombreAndCombustible(String nombre, String combustible){
         Reparacion reparacion = reparacionRepository.findByNombre(nombre);
-        if (combustible.equals("Gas"))
+        if (combustible.equals("Gasoline"))
         {
             return reparacion.getPrecioGas();
         }
@@ -40,7 +40,7 @@ public class ReparacionService {
             return reparacion.getPrecioElectric();
         }
         else {
-            throw new RuntimeException("el parámetro de combustible está mal escrito, errfunct: getMontoReparacionByNombreAndCombustible");
+            throw new RuntimeException("el parámetro de combustible está mal escrito, errfunct: getMontoReparacionByNombreAndCombustible(nombreReparacion: " + nombre + " combustible: " + combustible + ")");
         }
     }
 

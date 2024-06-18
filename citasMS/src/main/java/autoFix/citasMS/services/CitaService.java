@@ -140,4 +140,17 @@ public class CitaService {
         return citaUnitariaRepository.save(nuevaCitaUnitaria);
     }
 
+    //Para establecer que una cita Unitaria ha sido resuelta
+    @Transactional
+    public CitaUnitaria citaUnitariaReadyById(Long id){
+        CitaUnitaria citaUnitaria = getCitaUnitariaById(id);
+        citaUnitaria.setFechaReparacion(LocalDateTime.now());
+        return citaUnitariaRepository.save(citaUnitaria);
+    }
+
+    //borrar una citaUnitaria, debe utilizarse al borrar una cita mayor
+    public void borrarCitaUnitariaById(Long id){
+        citaUnitariaRepository.deleteById(id);
+    }
+
 }
