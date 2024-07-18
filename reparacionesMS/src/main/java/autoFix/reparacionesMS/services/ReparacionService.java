@@ -2,6 +2,7 @@ package autoFix.reparacionesMS.services;
 
 import autoFix.reparacionesMS.entities.Reparacion;
 import autoFix.reparacionesMS.repositories.ReparacionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +67,7 @@ public class ReparacionService {
         return reparacionRepository.save(reparacionExistente);
     }
 
+    @Transactional
     public void borrarReparacion(int id){
         reparacionRepository.deleteReparacionById(id);
     }

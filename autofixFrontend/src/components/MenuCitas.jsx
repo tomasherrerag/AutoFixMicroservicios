@@ -63,34 +63,40 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const AutoFix = () => {
+const BackButton = styled(Button)(({ theme }) => ({
+  backgroundColor: '#ff1744',
+  color: '#ffffff',
+  position: 'absolute',
+  top: theme.spacing(2),
+  left: theme.spacing(2),
+  padding: theme.spacing(1),
+  zIndex: 2,
+  '&:hover': {
+    backgroundColor: '#d50000',
+  },
+}));
+
+const MenuCitas = () => {
   const navigate = useNavigate();
 
   return (
     <StyledContainer>
       <Header>
+        <BackButton variant="contained" onClick={() => navigate('/')}>
+          Volver
+        </BackButton>
         <StyledTitle variant="h2">AutoFix Calculator</StyledTitle>
-        <StyledSubtitle variant="h6">home</StyledSubtitle>
+        <StyledSubtitle variant="h6">home &gt; menú citas</StyledSubtitle>
       </Header>
       <ButtonContainer>
-        <StyledButton variant="contained" onClick={() => navigate('/menu-citas')}>
-          Menú Citas
-        </StyledButton>
-        <StyledButton variant="contained" onClick={() => navigate('/menu-reportes')}>
-          Menú Reportes
-        </StyledButton>
-        <StyledButton variant="contained" onClick={() => navigate('/menu-vehiculos')}>
-          Menú Vehículos
-        </StyledButton>
-        <StyledButton variant="contained" onClick={() => navigate('/menu-marcas')}>
-          Menú Marcas
-        </StyledButton>
-        <StyledButton variant="contained" onClick={() => navigate('/menu-reparaciones')}>
-          Menú Reparaciones
-        </StyledButton>
+        <StyledButton variant="contained">Agregar Cita</StyledButton>
+        <StyledButton variant="contained">Modificación Lista</StyledButton>
+        <StyledButton variant="contained">Cerrar Cita</StyledButton>
+        <StyledButton variant="contained">Retirar Vehículo</StyledButton>
+        <StyledButton variant="contained">Modificar Citas</StyledButton>
       </ButtonContainer>
     </StyledContainer>
   );
 };
 
-export default AutoFix;
+export default MenuCitas;

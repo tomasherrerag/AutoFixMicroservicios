@@ -2,6 +2,7 @@ package autoFix.vehiculosMS.controllers;
 
 import autoFix.vehiculosMS.entities.Vehiculo;
 import autoFix.vehiculosMS.services.VehiculoService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class VehiculoController {
         return vehiculoService.modificarVehiculo(id, nuevoVehiculo);
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteVehiculo(@PathVariable Long id){
         vehiculoService.borrarVehiculo(id);

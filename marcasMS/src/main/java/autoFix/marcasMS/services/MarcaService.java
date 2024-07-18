@@ -62,6 +62,8 @@ public class MarcaService {
         return marcaRepository.save(marcaExistente);
     }
 
+
+    @Transactional
     public void borrarMarca(int id){
         marcaRepository.deleteMarcaById(id);
     }

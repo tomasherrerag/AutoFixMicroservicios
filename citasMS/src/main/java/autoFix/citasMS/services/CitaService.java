@@ -149,6 +149,7 @@ public class CitaService {
     }
 
     //borrar una citaUnitaria, debe utilizarse al borrar una cita mayor
+    @Transactional
     public void borrarCitaUnitariaById(Long id){
         citaUnitariaRepository.deleteById(id);
     }

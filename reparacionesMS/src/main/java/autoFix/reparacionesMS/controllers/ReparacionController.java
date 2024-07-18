@@ -44,7 +44,7 @@ public class ReparacionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMarca(@PathVariable int id){
+    public ResponseEntity<String> deleteReparación(@PathVariable int id){
         reparacionService.borrarReparacion(id);
         return new ResponseEntity<>("Reparacion eliminada", HttpStatus.OK);
     }
