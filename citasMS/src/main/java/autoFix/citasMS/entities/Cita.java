@@ -20,7 +20,7 @@ public class Cita {
     private Long id;
 
     @Column(name = "fechaIn")
-    private LocalDateTime fechaIn;
+    private LocalDateTime fechaEntrada;
 
     @Column(name = "montoBase")
     private int montoBase;
@@ -42,7 +42,7 @@ public class Cita {
     @Column(name = "kilometraje")
     private int kilometraje;
     @Column(name = "idVehiculo")
-
     private Long idVehiculo;
+    @Column(name = "nombresReparaciones")
     private String nombresReparaciones;
 }

@@ -19,14 +19,14 @@ public class CitaUnitaria {
     @Column(unique = true, nullable = false, name = "id")
     private Long id;
 
-    @Column(name = "patente", unique = true, nullable = false)
+    @Column(name = "patente", nullable = false)
     private String patente;
     @Column(name = "reparacion", nullable = false)
     private String reparacion;
     @Column(name = "fechaReady")
     private LocalDateTime fechaReparacion;
     @Column(name = "montoReparacion")
-    private int MontoReparacion;
+    private int montoReparacion;
 
     @Column(name = "citaPadre")
     private Long idCitaPadre;

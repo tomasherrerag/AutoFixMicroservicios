@@ -26,6 +26,10 @@ public class VehiculoService {
         return vehiculoRepository.findVehiculoByPatente(patente).getId();
     }
 
+    public String getTipoVehiculoByPatente(String patente){
+        return vehiculoRepository.findVehiculoByPatente(patente).getTipoVehiculo();
+    }
+
     public int getIdMarcaByIdVehiculo(Long idVehiculo){
         return vehiculoRepository.getById(idVehiculo).getIdMarca();
     }

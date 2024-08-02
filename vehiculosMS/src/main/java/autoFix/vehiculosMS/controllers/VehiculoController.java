@@ -19,6 +19,9 @@ public class VehiculoController {
         this.vehiculoService = vehiculoService;
     }
 
+
+    //bloque GetMapping
+
     @GetMapping("/")
     public ResponseEntity<List<Vehiculo>> listarVehiculos(){
         List<Vehiculo> listadoVehiculos = vehiculoService.getVehiculos();
@@ -31,22 +34,10 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculo);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Vehiculo> saveVehiculo(@RequestBody Vehiculo vehiculo){
-        Vehiculo nuevoVehiculo = vehiculoService.saveVehiculo(vehiculo);
-        return ResponseEntity.ok(nuevoVehiculo);
-    }
-
-    @PutMapping("/{id}")
-    public Vehiculo updateVehiculo(@PathVariable Long id, @RequestBody Vehiculo nuevoVehiculo){
-        return vehiculoService.modificarVehiculo(id, nuevoVehiculo);
-    }
-
-    @Transactional
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteVehiculo(@PathVariable Long id){
-        vehiculoService.borrarVehiculo(id);
-        return new ResponseEntity<>("Vehiculo eliminado", HttpStatus.OK);
+    @GetMapping("/getPatenteByIdVehiculo{id}")
+    public ResponseEntity<String> getPatenteByIdVehiculo(@PathVariable Long id){
+        Vehiculo vehiculo = vehiculoService.getVehiculoById(id);
+        return ResponseEntity.ok(vehiculo.getPatente());
     }
 
     @GetMapping("/getIdVehiculoByPatente")
@@ -66,4 +57,44 @@ public class VehiculoController {
         String combustible = vehiculoService.getTipoCombustibleByPatente(patente);
         return ResponseEntity.ok(combustible);
     }
+
+    @GetMapping("/getTipoVehiculoByPatente")
+    public ResponseEntity<String> getTipoVehiculoByPatente(@RequestParam String patente){
+        String tipo = vehiculoService.getTipoVehiculoByPatente(patente);
+        return ResponseEntity.ok(tipo);
+    }
+
+
+    // Bloque PostMapping
+
+    @PostMapping("/")
+    public ResponseEntity<Vehiculo> saveVehiculo(@RequestBody Vehiculo vehiculo){
+        Vehiculo nuevoVehiculo = vehiculoService.saveVehiculo(vehiculo);
+        return ResponseEntity.ok(nuevoVehiculo);
+    }
+
+
+
+
+    //Bloque PutMapping
+
+    @PutMapping("/{id}")
+    public Vehiculo updateVehiculo(@PathVariable Long id, @RequestBody Vehiculo nuevoVehiculo){
+        return vehiculoService.modificarVehiculo(id, nuevoVehiculo);
+    }
+
+
+
+
+    //Bloque DeleteMapping
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteVehiculo(@PathVariable Long id){
+        vehiculoService.borrarVehiculo(id);
+        return new ResponseEntity<>("Vehiculo eliminado", HttpStatus.OK);
+    }
+
+
+
 }

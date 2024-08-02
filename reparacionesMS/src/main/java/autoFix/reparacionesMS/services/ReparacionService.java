@@ -5,6 +5,7 @@ import autoFix.reparacionesMS.repositories.ReparacionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,5 +71,15 @@ public class ReparacionService {
     @Transactional
     public void borrarReparacion(int id){
         reparacionRepository.deleteReparacionById(id);
+    }
+
+    @Transactional
+    public List<String> getNombreReparaciones(){
+        List<String> nombreReparaciones = new ArrayList<>();
+        List<Reparacion> reparaciones = reparacionRepository.findAll();
+        for (Reparacion reparacion : reparaciones) {
+            nombreReparaciones.add(reparacion.getNombre());
+        }
+        return nombreReparaciones;
     }
 }

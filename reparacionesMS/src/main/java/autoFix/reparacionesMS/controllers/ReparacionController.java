@@ -19,6 +19,10 @@ public class ReparacionController {
         this.reparacionService = reparacionService;
     }
 
+
+
+    //Bloque GetMapping
+
     @GetMapping("/")
     public ResponseEntity<List<Reparacion>> listarReparaciones(){
         List<Reparacion> listadoReparaciones = reparacionService.getReparaciones();
@@ -31,6 +35,22 @@ public class ReparacionController {
         return ResponseEntity.ok(reparacion);
     }
 
+    @GetMapping("/MontoByNombreAndCombustible")
+    public ResponseEntity<Integer> getMontoReparacionByNombreAndCombustible(@RequestParam String nombre,
+                                                                            @RequestParam String combustible){
+        Integer montoReparacion = reparacionService.getMontoReparacionByNombreAndCombustible(nombre, combustible);
+        return ResponseEntity.ok(montoReparacion);
+    }
+
+    @GetMapping("/obtenerNombresReparaciones")
+    public ResponseEntity<List<String>> obtenerNombresReparaciones(){
+        List<String> nombresReparaciones = reparacionService.getNombreReparaciones();
+        return ResponseEntity.ok(nombresReparaciones);
+    }
+
+
+    //Bloque PostMapping
+
     @PostMapping("/")
     public ResponseEntity<Reparacion> saveReparacion(@RequestBody Reparacion reparacion)
     {
@@ -38,10 +58,20 @@ public class ReparacionController {
         return ResponseEntity.ok(nuevaReparacion);
     }
 
+
+
+
+    //Bloque PutMapping
+
     @PutMapping("/{id}")
     public Reparacion updateReparacion(@PathVariable int id, @RequestBody Reparacion nuevaReparacion){
         return reparacionService.modificarReparacion(id, nuevaReparacion);
     }
+
+
+
+
+    //Bloque DeleteMapping
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReparación(@PathVariable int id){
@@ -49,10 +79,5 @@ public class ReparacionController {
         return new ResponseEntity<>("Reparacion eliminada", HttpStatus.OK);
     }
 
-    @GetMapping("/MontoByNombre")
-    public ResponseEntity<Integer> getMontoReparacionByNombreAndCombustible(@RequestParam String nombre,
-                                                                            @RequestParam String combustible){
-        Integer montoReparacion = reparacionService.getMontoReparacionByNombreAndCombustible(nombre, combustible);
-        return ResponseEntity.ok(montoReparacion);
-    }
+
 }

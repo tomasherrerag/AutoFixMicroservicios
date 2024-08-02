@@ -89,11 +89,19 @@ const MenuCitas = () => {
         <StyledSubtitle variant="h6">home &gt; menú citas</StyledSubtitle>
       </Header>
       <ButtonContainer>
-        <StyledButton variant="contained">Agregar Cita</StyledButton>
-        <StyledButton variant="contained">Modificación Lista</StyledButton>
-        <StyledButton variant="contained">Cerrar Cita</StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/agregar-cita')}>
+          Agregar Cita
+        </StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/reparacion-lista')}>
+          Reparación Lista
+        </StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/cerrar-cita')}>
+          Cerrar Cita
+        </StyledButton>
         <StyledButton variant="contained">Retirar Vehículo</StyledButton>
-        <StyledButton variant="contained">Modificar Citas</StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/eliminar-citas')}>
+          Eliminar Citas/Reparaciones
+        </StyledButton>
       </ButtonContainer>
     </StyledContainer>
   );

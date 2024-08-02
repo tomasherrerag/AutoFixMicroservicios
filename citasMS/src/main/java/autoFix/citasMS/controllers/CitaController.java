@@ -2,6 +2,8 @@ package autoFix.citasMS.controllers;
 
 import autoFix.citasMS.DTOs.NuevaCitaDTO;
 import autoFix.citasMS.DTOs.NuevaCitaUnitariaDTO;
+import autoFix.citasMS.DTOs.Reporte1Reparacion;
+import autoFix.citasMS.DTOs.Reporte2Reparacion;
 import autoFix.citasMS.entities.Cita;
 import autoFix.citasMS.entities.CitaUnitaria;
 import autoFix.citasMS.services.CitaService;
@@ -23,9 +25,17 @@ public class CitaController {
 
     //Bloque Citas
 
+    //Bloque  Citas - GetMapping
+
     @GetMapping("/")
     public ResponseEntity<List<Cita>> listarCitas(){
         List<Cita> listadoCitas = citaService.getCitas();
+        return ResponseEntity.ok(listadoCitas);
+    }
+
+    @GetMapping("/Cerradas")
+    public ResponseEntity<List<Cita>> listarCitasCerradas(){
+        List<Cita> listadoCitas = citaService.obtenerCitasCerradas();
         return ResponseEntity.ok(listadoCitas);
     }
 
@@ -35,22 +45,66 @@ public class CitaController {
         return ResponseEntity.ok(listadoCitas);
     }
 
+    @GetMapping("/reportes/reporte1")
+    public ResponseEntity<List<Reporte1Reparacion>> generarReporte1(@RequestParam int mes, @RequestParam int year){
+        List<Reporte1Reparacion> reporte1 = citaService.generarReporte1(mes, year);
+        return ResponseEntity.ok(reporte1);
+    }
+
+    @GetMapping("/reportes/reporte2")
+    public ResponseEntity<List<Reporte2Reparacion>> generarReporte2(@RequestParam int mes, @RequestParam int year){
+        List<Reporte2Reparacion> reporte2 = citaService.generarReporte2(mes, year);
+        return ResponseEntity.ok(reporte2);
+    }
+
+
+    //Bloque  Citas - PostMapping
+
     @PostMapping("/in/")
     public ResponseEntity<Cita> nuevaCita(@RequestBody NuevaCitaDTO nuevaCitaDto){
         Cita nuevaCita = citaService.nuevaCita(nuevaCitaDto.getPatente(), nuevaCitaDto.getListaReparaciones(), nuevaCitaDto.getKilometraje(), nuevaCitaDto.getBono());
         return ResponseEntity.ok(nuevaCita);
     }
 
+
+
+    //Bloque  Citas - PutMapping
+
     @PutMapping("/ready/{id}")
     public Cita citaReady(@PathVariable Long id){
         return citaService.reparacionesListas(id);
     }
 
+    @PutMapping("/out/{id}")
+    public Cita citaOut(@PathVariable Long id){ return citaService.retiroCita(id); }
+
+
+    //Bloque Citas - DeleteMapping
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> borrarCita(@PathVariable Long id){
+        citaService.borrarCitaById(id);
+        return new ResponseEntity<>("Cita eliminada.", HttpStatus.OK);
+    }
+
+
+
+    //----------------------------------------------------------------------------------------------------------
     //Bloque CitasUnitarias
+
+
+
+    //bloque CitasUnitarias - GetMapping
 
     @GetMapping("/Unitarias/")
     public ResponseEntity<List<CitaUnitaria>> listarCitasUnitarias(){
         List<CitaUnitaria> listadoUnitarias = citaService.getCitasUnitarias();
+        return ResponseEntity.ok(listadoUnitarias);
+    }
+
+    @GetMapping("/Unitarias/NoListas")
+    public ResponseEntity<List<CitaUnitaria>> listarCitasUnitariasNoListas(){
+        List<CitaUnitaria> listadoUnitarias = citaService.obtenerCitasUnitariasNoListas();
         return ResponseEntity.ok(listadoUnitarias);
     }
 
@@ -72,7 +126,9 @@ public class CitaController {
         return ResponseEntity.ok(listadoUnitarias);
     }
 
-    //bloque PostMapping
+
+
+    //bloque CitasUnitarias - PostMapping
 
     @PostMapping("/Unitarias/")
     public ResponseEntity<CitaUnitaria> crearCitaUnitaria(@RequestBody NuevaCitaUnitariaDTO nuevaCitaUnitariaDTO){
@@ -80,17 +136,40 @@ public class CitaController {
         return ResponseEntity.ok(citaUnitaria);
     }
 
-    //bloque PutMapping
+
+
+    //bloque CitasUnitarias - PutMapping
+
     @PutMapping("/Unitarias/ready/{id}")
     public ResponseEntity<CitaUnitaria> citaUnitariaReady(@PathVariable Long id){
         CitaUnitaria citaUnitaria = citaService.citaUnitariaReadyById(id);
         return ResponseEntity.ok(citaUnitaria);
     }
 
-    //bloque DeleteMapping
+
+
+    //bloque CitasUnitarias - DeleteMapping
+
     @DeleteMapping("/Unitarias/delete/{id}")
     public ResponseEntity<String> borrarCitaUnitaria(@PathVariable Long id){
         citaService.borrarCitaUnitariaById(id);
         return new ResponseEntity<>("Cita Unitaria eliminada.", HttpStatus.OK);
     }
+
+    /*@DeleteMapping("/Unitarias/deleteByIdPadreAndReparacion")
+    public ResponseEntity<String> borrarCitaUnitariaByIdPadreAndReparacion(@RequestParam Long idPadre, @RequestParam String reparacion){
+        citaService.borrarCitaUnitariaByIdPadreAndReparacion(idPadre, reparacion);
+        return new ResponseEntity<>("Cita Unitaria eliminada.", HttpStatus.OK);
+    }*/
+
+    @DeleteMapping("/Unitarias/deleteByIdPadreAndReparacion")
+    public ResponseEntity<String> borrarCitaUnitariaByIdPadreAndReparacion(@RequestParam Long idPadre, @RequestParam String reparacion){
+        boolean resultado = citaService.borrarCitaUnitariaByIdPadreAndReparacion(idPadre, reparacion);
+        if (resultado) {
+            return new ResponseEntity<>("Cita Unitaria eliminada.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Error al eliminar la Cita Unitaria.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
