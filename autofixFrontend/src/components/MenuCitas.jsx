@@ -98,7 +98,9 @@ const MenuCitas = () => {
         <StyledButton variant="contained" onClick={() => navigate('/cerrar-cita')}>
           Cerrar Cita
         </StyledButton>
-        <StyledButton variant="contained">Retirar Vehículo</StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/retiro-vehiculo')}>
+          Retiro Vehículo
+        </StyledButton>
         <StyledButton variant="contained" onClick={() => navigate('/eliminar-citas')}>
           Eliminar Citas/Reparaciones
         </StyledButton>

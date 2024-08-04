@@ -12,9 +12,11 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     List<Cita> getCitasByIdVehiculoOrderByFechaEntradaAsc(Long idVehiculo);
 
-    List<Cita> findAllByOrderByFechaEntradaAsc();
+    List<Cita> findAllByOrderByFechaEntradaDesc();
 
     List<Cita> getCitasByFechaReadyIsNull();
+
+    List<Cita> getCitasByFechaReadyIsNotNullAndFechaOutIsNull();
 
     List<Cita> getCitasByFechaReadyIsNullOrderByFechaEntradaDesc();
 

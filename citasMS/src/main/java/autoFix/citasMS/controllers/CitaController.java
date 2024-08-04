@@ -39,6 +39,12 @@ public class CitaController {
         return ResponseEntity.ok(listadoCitas);
     }
 
+    @GetMapping("/ARetirar")
+    public ResponseEntity<List<Cita>> listarCitasARetirar(){
+        List<Cita> listadoCitas = citaService.obtenerCiasARetirar();
+        return ResponseEntity.ok(listadoCitas);
+    }
+
     @GetMapping("/byPatente/{patente}")
     public ResponseEntity<List<Cita>> listarCitasByPatente(@PathVariable String patente){
         List<Cita> listadoCitas = citaService.getCitasByPatente(patente);
@@ -70,10 +76,36 @@ public class CitaController {
 
     //Bloque  Citas - PutMapping
 
-    @PutMapping("/ready/{id}")
+    /*@PutMapping("/ready/{id}")
     public Cita citaReady(@PathVariable Long id){
         return citaService.reparacionesListas(id);
     }
+
+    @PutMapping("/ready/{id}")
+    public ResponseEntity<?> citaReady(@PathVariable Long id) {
+        try {
+            Cita cita = citaService.reparacionesListas(id);
+            return ResponseEntity.ok(cita);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }*/
+
+    @PutMapping("/ready/{id}")
+    public ResponseEntity<?> citaReady(@PathVariable Long id) {
+        int result = citaService.reparacionesListas(id);
+        switch(result) {
+            case 1:
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra la cita a modificar.");
+            case 2:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Quedan citas unitarias por terminar.");
+            case 0:
+                return ResponseEntity.ok("Cita cerrada correctamente.");
+            default:
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error desconocido.");
+        }
+    }
+
 
     @PutMapping("/out/{id}")
     public Cita citaOut(@PathVariable Long id){ return citaService.retiroCita(id); }

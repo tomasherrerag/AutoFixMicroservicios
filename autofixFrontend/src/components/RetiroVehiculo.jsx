@@ -57,7 +57,7 @@ const BackButton = styled(Button)(({ theme }) => ({
   marginLeft: theme.spacing(1),
 }));
 
-const CloseAppointmentButton = styled(Button)(({ theme }) => ({
+const ReleaseVehicleButton = styled(Button)(({ theme }) => ({
   backgroundColor: '#4caf50', // Color verde
   color: '#ffffff',
   '&:hover': {
@@ -75,17 +75,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   whiteSpace: 'nowrap',
 }));
 
-const CerrarCita = () => {
+const RetiroVehiculo = () => {
   const navigate = useNavigate();
   const [citas, setCitas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [selectedCita, setSelectedCita] = useState(null);
-  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/autofix/citas/Cerradas')
+    axios.get('http://localhost:8080/autofix/citas/ARetirar')
       .then(response => {
         setCitas(response.data);
         setLoading(false);
@@ -96,28 +95,24 @@ const CerrarCita = () => {
       });
   }, []);
 
-  const handleCloseCita = (id) => {
+  const handleReleaseVehicle = (id) => {
     setSelectedCita(citas.find(cita => cita.id === id));
     setOpen(true);
   };
 
-  const handleConfirmCloseCita = () => {
-    axios.put(`http://localhost:8080/autofix/citas/ready/${selectedCita.id}`)
+  const handleConfirmReleaseVehicle = () => {
+    axios.put(`http://localhost:8080/autofix/citas/out/${selectedCita.id}`)
       .then(response => {
-        const updatedCitas = citas.map(cita => {
-          if (cita.id === selectedCita.id) {
-            return { ...cita, fechaReady: new Date().toISOString() };
-          }
-          return cita;
-        });
-        setCitas(updatedCitas);
         setOpen(false);
         setSelectedCita(null);
-        setSuccess(response.data);
+        setSuccess('Vehículo retirado correctamente');
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000); // Recarga la página después de 2 segundos para dar tiempo a mostrar el mensaje de éxito
       })
       .catch(error => {
         setOpen(false);
-        setError(error.response ? error.response.data : 'Error cerrando la cita');
+        console.error('Error retirando el vehículo:', error);
       });
   };
 
@@ -127,7 +122,6 @@ const CerrarCita = () => {
   };
 
   const handleCloseSnackbar = () => {
-    setError(null);
     setSuccess(null);
   };
 
@@ -137,7 +131,7 @@ const CerrarCita = () => {
         <BackButton variant="contained" onClick={() => navigate('/menu-citas')}>
           Volver
         </BackButton>
-        <StyledSubtitle>home &gt; menú citas &gt; cerrar citas</StyledSubtitle>
+        <StyledSubtitle>home &gt; menú citas &gt; retiro vehículo</StyledSubtitle>
         <StyledTitle>AutoFix Calculator</StyledTitle>
       </Header>
       {loading ? (
@@ -185,9 +179,9 @@ const CerrarCita = () => {
                   <StyledTableCell>{cita.montoIVA}</StyledTableCell>
                   <StyledTableCell>
                     <Box display="flex" justifyContent="flex-start">
-                      <CloseAppointmentButton variant="contained" onClick={() => handleCloseCita(cita.id)}>
-                        Cerrar Cita
-                      </CloseAppointmentButton>
+                      <ReleaseVehicleButton variant="contained" onClick={() => handleReleaseVehicle(cita.id)}>
+                        Retirar Vehículo
+                      </ReleaseVehicleButton>
                     </Box>
                   </StyledTableCell>
                 </TableRow>
@@ -197,27 +191,22 @@ const CerrarCita = () => {
         </StyledTableContainer>
       )}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Confirmar cierre de cita</DialogTitle>
+        <DialogTitle>Confirmar retiro de vehículo</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Está seguro que quiere cerrar la cita seleccionada con ID: {selectedCita?.id}?
+            ¿Está seguro que quiere retirar el vehículo de la cita seleccionada con ID: {selectedCita?.id}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <CloseAppointmentButton onClick={handleConfirmCloseCita}>
+          <ReleaseVehicleButton onClick={handleConfirmReleaseVehicle}>
             Confirmar
-          </CloseAppointmentButton>
+          </ReleaseVehicleButton>
         </DialogActions>
       </Dialog>
 
-      <Snackbar open={!!error} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="error">
-          {error}
-        </Alert>
-      </Snackbar>
       <Snackbar open={!!success} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success">
           {success}
@@ -227,4 +216,4 @@ const CerrarCita = () => {
   );
 };
 
-export default CerrarCita;
+export default RetiroVehiculo;

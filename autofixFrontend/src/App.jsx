@@ -19,6 +19,9 @@ import AgregarCita from './components/AgregarCita.jsx';
 import EliminarCitas from './components/EliminarCitas.jsx';
 import ReparacionLista from './components/ReparacionLista.jsx';
 import CerrarCita from './components/CerrarCita.jsx';
+import RetiroVehiculo from './components/RetiroVehiculo.jsx';
+import Reporte1 from './components/Reporte1.jsx';
+import Reporte2 from './components/Reporte2.jsx';
 
 function App() {
   return (
@@ -43,6 +46,9 @@ function App() {
         <Route path='/eliminar-citas' element={<EliminarCitas />} />
         <Route path='/reparacion-lista' element={<ReparacionLista />} />
         <Route path='/cerrar-cita' element={<CerrarCita />} />
+        <Route path='/retiro-vehiculo' element={<RetiroVehiculo />} />
+        <Route path='/reporte1' element={<Reporte1 />} />
+        <Route path='/reporte2' element={<Reporte2 />} />
       </Routes>
     </Router>
   );

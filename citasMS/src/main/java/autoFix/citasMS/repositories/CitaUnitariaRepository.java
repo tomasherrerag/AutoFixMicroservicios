@@ -19,4 +19,7 @@ public interface CitaUnitariaRepository extends JpaRepository<CitaUnitaria, Long
     CitaUnitaria getCitaUnitariaByIdCitaPadreAndReparacion(long idCitaPadre, String reparacion);
 
     List<CitaUnitaria> findCitaUnitariasByFechaReparacionIsNull();
+
+    List<CitaUnitaria> findCitaUnitariasByFechaReparacionIsNotNull();
+
 }

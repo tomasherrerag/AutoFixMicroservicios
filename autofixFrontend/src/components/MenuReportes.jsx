@@ -89,10 +89,12 @@ const MenuReportes = () => {
         <StyledSubtitle variant="h6">home &gt; menú reportes</StyledSubtitle>
       </Header>
       <ButtonContainer>
-        <StyledButton variant="contained">Generar Reporte 1</StyledButton>
-        <StyledButton variant="contained">Generar Reporte 2</StyledButton>
-        <StyledButton variant="contained">Generar Reporte 3</StyledButton>
-        <StyledButton variant="contained">Generar Reporte 4</StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/reporte1')}>
+          Generar Reporte 1
+        </StyledButton>
+        <StyledButton variant="contained" onClick={() => navigate('/reporte2')}>
+          Generar Reporte 2
+        </StyledButton>
       </ButtonContainer>
     </StyledContainer>
   );

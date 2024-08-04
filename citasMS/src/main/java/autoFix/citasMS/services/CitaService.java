@@ -45,11 +45,15 @@ public class CitaService {
     //Bloque Citas
 
     public List<Cita> getCitas(){
-        return citaRepository.findAllByOrderByFechaEntradaAsc();
+        return citaRepository.findAllByOrderByFechaEntradaDesc();
     }
 
     public List<Cita> obtenerCitasCerradas(){
         return citaRepository.getCitasByFechaReadyIsNull();
+    }
+
+    public List<Cita> obtenerCiasARetirar(){
+        return citaRepository.getCitasByFechaReadyIsNotNullAndFechaOutIsNull();
     }
 
     public Cita getCitaById(Long id){
@@ -114,20 +118,37 @@ public class CitaService {
         citaRepository.deleteById(id);
     }
 
-    @Transactional
+    /*@Transactional
     public Cita reparacionesListas(Long idCita){
         Optional<Cita> optionalCita = citaRepository.findById(idCita);
         if (optionalCita.isEmpty()){
-            throw new RuntimeException("no se encuentra la cita a modificar, errfunct: reparacionesListas");
+            throw new RuntimeException("No se encuentra la cita a modificar, errfunct: reparacionesListas");
         }
         Cita citaOrigen = optionalCita.get();
         if (citaUnitariaRepository.existsCitaUnitariaByIdCitaPadreAndFechaReparacionIsNull(citaOrigen.getId()))
         {
-            throw new RuntimeException("quedan citas unitarias por terminar");
+            throw new RuntimeException("Quedan citas unitarias por terminar");
         }
         citaOrigen.setFechaReady(LocalDateTime.now());
         return citaRepository.save(citaOrigen);
+    }*/
+
+    @Transactional
+    public int reparacionesListas(Long idCita){
+        Optional<Cita> optionalCita = citaRepository.findById(idCita);
+        if (optionalCita.isEmpty()){
+            return 1; // Código de error 1: Cita no encontrada
+        }
+        Cita citaOrigen = optionalCita.get();
+        if (citaUnitariaRepository.existsCitaUnitariaByIdCitaPadreAndFechaReparacionIsNull(citaOrigen.getId())) {
+            return 2; // Código de error 2: Citas unitarias sin terminar
+        }
+        citaOrigen.setFechaReady(LocalDateTime.now());
+        citaRepository.save(citaOrigen);
+        return 0; // Código de éxito: Cita cerrada correctamente
     }
+
+
 
     @Transactional
     public Cita retiroCita(Long idCita){
@@ -448,7 +469,7 @@ public class CitaService {
     @Transactional
     public List<Reporte1Reparacion> generarReporte1(int mes, int year){
         List<Reporte1Reparacion> reporte = generarListaReparacionesReporte1();
-        List<CitaUnitaria> citasUnitarias = citaUnitariaRepository.findAll();
+        List<CitaUnitaria> citasUnitarias = citaUnitariaRepository.findCitaUnitariasByFechaReparacionIsNotNull();
 
         String tipoVehiculoAux;
         String nombreReparacionAux;
@@ -495,8 +516,8 @@ public class CitaService {
     public List<Reporte1Reparacion> generarListaReparacionesReporte1(){
         List<Reporte1Reparacion> ListaReparaciones = new ArrayList<>();
         List<String> nombresReparaciones = reparacionesFeignClient.obtenerNombresReparaciones();
-        Reporte1Reparacion reparacionAux = new Reporte1Reparacion();
         for(String nombreReparacion : nombresReparaciones){
+            Reporte1Reparacion reparacionAux = new Reporte1Reparacion();
             reparacionAux.setNombreReparacion(nombreReparacion);
             ListaReparaciones.add(reparacionAux);
         }
@@ -510,7 +531,7 @@ public class CitaService {
         int year2;
         int year3;
         List<Reporte2Reparacion> listaReparaciones = generarListaReparacionesReporte2();
-        List<CitaUnitaria> listaCitasUnitarias = citaUnitariaRepository.findAll();
+        List<CitaUnitaria> listaCitasUnitarias = citaUnitariaRepository.findCitaUnitariasByFechaReparacionIsNotNull();
 
         if (mes == 1){
             mes2 = 12;
@@ -558,12 +579,43 @@ public class CitaService {
             }
         }
 
-        for (Reporte2Reparacion reporte2Reparacion : listaReparaciones){
+        /*for (Reporte2Reparacion reporte2Reparacion : listaReparaciones){
             reporte2Reparacion.setVariacionCantidad2(((reporte2Reparacion.getCantidadReparacion1() / reporte2Reparacion.getCantidadReparacion2()) - 1) * 100);
             reporte2Reparacion.setVariacionMonto2(((reporte2Reparacion.getMontoReparacion1() / reporte2Reparacion.getMontoReparacion2()) - 1) * 100);
             reporte2Reparacion.setVariacionCantidad3(((reporte2Reparacion.getCantidadReparacion2() / reporte2Reparacion.getCantidadReparacion3()) - 1) * 100);
             reporte2Reparacion.setVariacionMonto3(((reporte2Reparacion.getMontoReparacion2() / reporte2Reparacion.getMontoReparacion3()) - 1) * 100);
+        }*/
+
+        for (Reporte2Reparacion reporte2Reparacion : listaReparaciones) {
+            // Set variacionCantidad2
+            if (reporte2Reparacion.getCantidadReparacion2() == 0) {
+                reporte2Reparacion.setVariacionCantidad2(100);
+            } else {
+                reporte2Reparacion.setVariacionCantidad2(((reporte2Reparacion.getCantidadReparacion1() / reporte2Reparacion.getCantidadReparacion2()) - 1) * 100);
+            }
+
+            // Set variacionMonto2
+            if (reporte2Reparacion.getMontoReparacion2() == 0) {
+                reporte2Reparacion.setVariacionMonto2(100);
+            } else {
+                reporte2Reparacion.setVariacionMonto2(((reporte2Reparacion.getMontoReparacion1() / reporte2Reparacion.getMontoReparacion2()) - 1) * 100);
+            }
+
+            // Set variacionCantidad3
+            if (reporte2Reparacion.getCantidadReparacion3() == 0) {
+                reporte2Reparacion.setVariacionCantidad3(100);
+            } else {
+                reporte2Reparacion.setVariacionCantidad3(((reporte2Reparacion.getCantidadReparacion2() / reporte2Reparacion.getCantidadReparacion3()) - 1) * 100);
+            }
+
+            // Set variacionMonto3
+            if (reporte2Reparacion.getMontoReparacion3() == 0) {
+                reporte2Reparacion.setVariacionMonto3(100);
+            } else {
+                reporte2Reparacion.setVariacionMonto3(((reporte2Reparacion.getMontoReparacion2() / reporte2Reparacion.getMontoReparacion3()) - 1) * 100);
+            }
         }
+
 
         return listaReparaciones;
     }
@@ -571,8 +623,8 @@ public class CitaService {
     public List<Reporte2Reparacion> generarListaReparacionesReporte2(){
         List<Reporte2Reparacion> ListaReparaciones = new ArrayList<>();
         List<String> nombresReparaciones = reparacionesFeignClient.obtenerNombresReparaciones();
-        Reporte2Reparacion reparacionAux = new Reporte2Reparacion();
         for(String nombreReparacion : nombresReparaciones){
+            Reporte2Reparacion reparacionAux = new Reporte2Reparacion();
             reparacionAux.setNombreReparacion(nombreReparacion);
             ListaReparaciones.add(reparacionAux);
         }
